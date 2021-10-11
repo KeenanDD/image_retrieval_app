@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+
+  <body>
+    <div id="out">
+
+    </div>
+    <div id="imgHolder">
+
+    </div>
+
+<script>
+//title
+function input () {
+  let header = "<h1>retrive an image</h1>" + "<br />";
+      header += "<hr />" + "<br />";
+
+  let textInput = '<input type="text" id="inputTextA" value="height">'
+      textInput += '<input type="text" id="inputTextB" value="width">'
+      textInput += '<input type="checkbox" id="greyCheck">' + ' <label for="greyCheck"> check for Greyscale</label>'
+
+  let button = "<button onClick='getImage()'>Input</button>";
+document.getElementById('out').innerHTML += header + textInput + "<br />" + button + "<br />";
+}
+input()
+
+
+//input values
+function getImage(src) {
+ let a = document.getElementById("inputTextA").value;
+  let b = document.getElementById("inputTextB").value;
+  let c = ""
+    if (document.getElementById('greyCheck').checked == false) {
+      c =""
+    }
+    else {
+      c ="?grayscale"
+    }
+    var img="";
+let imgPromise = new Promise(function(resolve, reject){
+             img = new Image();
+             img.addEventListener('load', resolve(img));
+              img.addEventListener('error', reject('could not load image'));
+              img.src = 'https://picsum.photos' + "/" + b + "/" + a + c; });
+    imgPromise.then(function(fromResolve){
+      console.log('the image has loaded.');
+      let node = document.getElementById('imgHolder');
+      node.appendChild(img);
+    }).catch(function(fromReject){
+      console.log(fromReject);
+    })
+ }
+
+</script>
+  </body>
+</html>
